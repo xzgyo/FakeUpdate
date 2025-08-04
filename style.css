@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    cursor: none !important;
+    user-select: none;
+}
+
+body {
+    background-color: #0063b1;
+}
+
+a {
+    text-decoration: none;
+}
+
+@font-face {
+    font-family: "Segoe Boot Semilight";
+    src: url("segoe_slboot.ttf");
+}
+
+#winlogo img {
+    height: 8rem;
+    margin-bottom: 12rem;
+}
+
+.content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white !important;
+    font-family: "Segoe Boot Semilight";
+    text-align: center;
+}
+
+#loader {
+    font-size: 2.2rem;
+    line-height: .2rem;
+}
+
+#loading_text {
+    font-size: 1.2rem;
+}
