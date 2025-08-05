@@ -10,7 +10,7 @@ async function Sleep(usec) {
  * @param {number} max;
  */
 function RandNumber(min, max) {
-  let result = Math.floor(Math.random() * max) + min;
+  let result = Math.floor(Math.random() * (max - min + 1)) + min;
   return result;
 }
 
@@ -61,8 +61,48 @@ async function OSIconAnimi(elements, isOut=false, Duration=ANIMI_DURATION) {
   }
 }
 
+/**
+ * @param {Element} element;
+ */
+function EnterFullScreen(element=document.documentElement) {
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.mozRequestFullScreen) { // Firefox
+    element.mozRequestFullScreen();
+  } else if (element.webkitRequestFullscreen) { // Safari, Chrome
+    element.webkitRequestFullscreen();
+  } else if (element.msRequestFullscreen) { // IE/Edge
+    element.msRequestFullscreen();
+  }
+}
+
+async function CheckFullScreen() {
+  if (!document.fullscreenElement)
+    EnterFullScreen();
+}
+
+async function AutoFullScreen() {
+  $(document).hover(CheckFullScreen);
+  $(document).focus(CheckFullScreen);
+  $(document).click(CheckFullScreen);
+  $(document).mouseenter(CheckFullScreen);
+  $(document).mouseover(CheckFullScreen);
+  $(document).mouseleave(CheckFullScreen);
+  $(document).mouseout(CheckFullScreen);
+  $(document).mousemove(CheckFullScreen);
+  $(document).keypress(CheckFullScreen);
+  $(document).keydown(CheckFullScreen);
+  $(document).keyup(CheckFullScreen);
+  $(document).on('touchstart', CheckFullScreen);
+  $(document).on('touchmove', CheckFullScreen);
+  $(document).on('touchend', CheckFullScreen);
+  $(document).on('touchcancel', CheckFullScreen);
+  $(document).on('fullscreenchange', CheckFullScreen);
+}
+
 $(document).ready(async function() {
-  
+  // 自动全屏
+  AutoFullScreen();
   while (true) {
     ResetAnimi();
     // 更新
@@ -93,11 +133,13 @@ $(document).ready(async function() {
     $('#winlogo').css('display', 'none');
     $('#loader').css('opacity', '0');
     await Sleep(2000);
-    // short Win logo
-    $('#winlogo').css('opacity', '0');
-    $('#winlogo').css('display', 'block');
-    await OSIconAnimi(['#winlogo'], false, .00005);
-    await Sleep(400);
-    await OSIconAnimi(['#winlogo'], true, .00005);
+    if (!!RandNumber(0, 1)) {
+      // short Win logo
+      $('#winlogo').css('opacity', '0');
+      $('#winlogo').css('display', 'block');
+      await OSIconAnimi(['#winlogo'], false, .00005);
+      await Sleep(400);
+      await OSIconAnimi(['#winlogo'], true, .00005);
+    }
   }
 });
