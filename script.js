@@ -19,7 +19,7 @@ $(document).ready(async function() {
     for (var i = 0xE052; i <= 0xE0C6; ++i) {
       $('#loader').empty();
       $('#loader').html(`&#x${i.toString(16).padStart(4, "0")};`);
-      await Sleep(1000/36);
+      await Sleep(1000/30);
     }
   }
 });
